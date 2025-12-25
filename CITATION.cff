@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+title: Neural Network
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - orcid: 'https://orcid.org/0009-0009-8814-7456'
+    email: gorzan0123@gmail.com
+    given-names: Power Trip
+repository-code: 'https://github.com/Power-Trip-Labs/neural-network'
+abstract: >-
+  A neural network that doesn't use A.I. libraries, made
+  from Scratch with NumPy.
+keywords:
+  - python
+  - neural-network
+  - numpy
+  - ai
+license: CC-BY-4.0
+commit: First commit
+version: '1'
+date-released: '2025-12-25'
