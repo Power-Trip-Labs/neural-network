@@ -1,6 +1,6 @@
 # Neural Network
 ![v1](https://img.shields.io/badge/Version-v1-green)
-![Static Badge](https://img.shields.io/badge/Language-Python-blue)
+![Static Badge](https://img.shields.io/badge/Made_in-Python-blue)
 
 A neural network library built without any AI libraries, only NumPy.
 
