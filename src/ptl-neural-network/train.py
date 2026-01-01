@@ -69,41 +69,43 @@ class NeuralNetwork:
 
     def predict(self, x):
         return np.argmax(self.feedforward(x))
+        
+def main():
+    folder = "train"
+    files = [f for f in os.listdir(folder) if f.endswith(".png")]
+    label_map = get_label_map(files)
+    x_data, y_data = [], []
+    
+    for f in files:
+        img = Image.open(os.path.join(folder, f)).convert('L')
+        feat = extract_features(img)
+        x_data.append(feat)
+        label = os.path.splitext(f)[0]
+        y_data.append(one_hot(label_map[label], len(label_map)))
+    
+    x = np.array(x_data)
+    y = np.array(y_data)
+    
+    nn = NeuralNetwork(input_size=x.shape[1], hidden_size=16, output_size=len(label_map))
+    
+    start = time.time()
+    for i in range(MAX_ITER):
+        total_error = 0
+        for xi, yi in zip(x, y):
+            nn.feedforward(xi)
+            total_error += nn.backprop(xi, yi)
+        if i % 100 == 0:
+            print(f"Iter {i} | Error: {total_error/len(x):.5f}")
+        if total_error / len(x) < TARGET_ERROR:
+            break
+    print(f"Training complete in {int(time.time() - start)}s")
+    
+    with open(MODEL_FILE, 'wb') as f:
+        pickle.dump({
+            'w1': nn.w1,
+            'w2': nn.w2,
+            'label_map': label_map
+        }, f)
+    
+    print("Model saved.")
 
-folder = "train"
-files = [f for f in os.listdir(folder) if f.endswith(".png")]
-label_map = get_label_map(files)
-x_data, y_data = [], []
-
-for f in files:
-    img = Image.open(os.path.join(folder, f)).convert('L')
-    feat = extract_features(img)
-    x_data.append(feat)
-    label = os.path.splitext(f)[0]
-    y_data.append(one_hot(label_map[label], len(label_map)))
-
-x = np.array(x_data)
-y = np.array(y_data)
-
-nn = NeuralNetwork(input_size=x.shape[1], hidden_size=16, output_size=len(label_map))
-
-start = time.time()
-for i in range(MAX_ITER):
-    total_error = 0
-    for xi, yi in zip(x, y):
-        nn.feedforward(xi)
-        total_error += nn.backprop(xi, yi)
-    if i % 100 == 0:
-        print(f"Iter {i} | Error: {total_error/len(x):.5f}")
-    if total_error / len(x) < TARGET_ERROR:
-        break
-print(f"Training complete in {int(time.time() - start)}s")
-
-with open(MODEL_FILE, 'wb') as f:
-    pickle.dump({
-        'w1': nn.w1,
-        'w2': nn.w2,
-        'label_map': label_map
-    }, f)
-
-print("Model saved.")
