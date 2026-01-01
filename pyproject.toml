@@ -4,9 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ptl-neural-network"
-version = "1.0.4"
+version = "1.0.5"
 description = "Power Trip Lab's neural network!"
 readme = "README_pypi.md"
+license = "CC-BY-SA-4.0"
 requires-python = ">=3.8"
 dependencies = [
     "numpy"
@@ -14,6 +15,10 @@ dependencies = [
 
 [project.scripts]
 ptl_neural = "ptl_neural_network.cli:main"
+
+[project.urls]
+"Source Code" = "https://github.com/Power-Trip-Labs/neural-network/"
+"Funding" = "https://power-trip-labs.github.io/funding.html"
 
 [tool.setuptools.packages.find]
 where = ["src"]
