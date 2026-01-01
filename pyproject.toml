@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-ptl-neural = "ptl-neural-network.cli:main"
+ptl_neural = "ptl_neural_network.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
