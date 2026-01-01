@@ -7,14 +7,14 @@ import time
 LEARNING_RATE = 0.1
 MAX_ITER = 100000
 TARGET_ERROR = 0.02
-MODEL_FILE = "model.pkl"
+MODEL_FILE = "../../model.pkl"
 
 with open("CONFIG", "r") as f:
     config = f.read().strip().split("\n")
     LEARNING_RATE = float(config[0].split("=")[1])
     MAX_ITER = int(config[1].split("=")[1])
     TARGET_ERROR = float(config[2].split("=")[1])
-    MODEL_FILE = config[3].split("=")[1]
+    MODEL_FILE = '../../'+config[3].split("=")[1]
 
 def get_label_map(filenames):
     labels = sorted(set(os.path.splitext(f)[0] for f in filenames))
@@ -71,7 +71,7 @@ class NeuralNetwork:
         return np.argmax(self.feedforward(x))
         
 def main():
-    folder = "train"
+    folder = "../../train"
     files = [f for f in os.listdir(folder) if f.endswith(".png")]
     label_map = get_label_map(files)
     x_data, y_data = [], []
@@ -108,4 +108,5 @@ def main():
         }, f)
     
     print("Model saved.")
+
 
