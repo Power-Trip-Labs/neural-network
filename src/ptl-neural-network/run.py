@@ -26,26 +26,28 @@ def extract_features(img):
     col_diffs = np.mean(np.abs(np.diff(arr, axis=1)))
     return np.array([mean, std, aspect_ratio, horz_edges, vert_edges, row_diffs, col_diffs])
 
-with open("CONFIG", "r") as f:
-    config = f.read().strip().split("\n")
-    MODEL_FILE = config[3].split("=")[1]
+def main():
+    with open("CONFIG", "r") as f:
+        config = f.read().strip().split("\n")
+        MODEL_FILE = config[3].split("=")[1]
+    
+    with open(MODEL_FILE, "rb") as f:
+        data = pickle.load(f)
+    
+    w1, w2 = data['w1'], data['w2']
+    label_map = data['label_map']
+    reverse_map = {v: k for k, v in label_map.items()}
+    nn = NeuralNetwork(w1, w2)
+    
+    while True:
+        path = input("Enter path to PNG image (or press Enter to quit): ").strip()
+        if not path:
+            break
+        try:
+            img = Image.open(path).convert('L')
+            features = extract_features(img)
+            pred = nn.predict(features)
+            print(f"Predicted object: {reverse_map[pred]}")
+        except Exception as e:
+            print(f"Error: {e}")
 
-with open(MODEL_FILE, "rb") as f:
-    data = pickle.load(f)
-
-w1, w2 = data['w1'], data['w2']
-label_map = data['label_map']
-reverse_map = {v: k for k, v in label_map.items()}
-nn = NeuralNetwork(w1, w2)
-
-while True:
-    path = input("Enter path to PNG image (or press Enter to quit): ").strip()
-    if not path:
-        break
-    try:
-        img = Image.open(path).convert('L')
-        features = extract_features(img)
-        pred = nn.predict(features)
-        print(f"Predicted object: {reverse_map[pred]}")
-    except Exception as e:
-        print(f"Error: {e}")
