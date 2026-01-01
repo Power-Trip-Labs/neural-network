@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "ptl-neural-network"
 version = "1.0.3"
 description = "Power Trip Lab's neural network!"
-readme = "README.md"
+readme = "README_pypi.md"
 requires-python = ">=3.8"
 dependencies = [
     "numpy"
