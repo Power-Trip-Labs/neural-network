@@ -27,11 +27,11 @@ def extract_features(img):
     return np.array([mean, std, aspect_ratio, horz_edges, vert_edges, row_diffs, col_diffs])
 
 def main():
-    with open("CONFIG", "r") as f:
+    with open("../../CONFIG", "r") as f:
         config = f.read().strip().split("\n")
         MODEL_FILE = config[3].split("=")[1]
     
-    with open(MODEL_FILE, "rb") as f:
+    with open('../../'+MODEL_FILE, "rb") as f:
         data = pickle.load(f)
     
     w1, w2 = data['w1'], data['w2']
@@ -50,4 +50,3 @@ def main():
             print(f"Predicted object: {reverse_map[pred]}")
         except Exception as e:
             print(f"Error: {e}")
-
